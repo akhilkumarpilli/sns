@@ -4,7 +4,6 @@ import Admin from "@/components/Admin";
 import Manage from "@/components/Manage";
 import RegisterName from "@/components/RegisterName";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { Crown } from "lucide-react";
 import { useState } from "react";
 
 const TabButton = ({

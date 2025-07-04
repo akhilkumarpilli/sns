@@ -24,7 +24,6 @@ interface NameCardProps {
   isPrimary: boolean;
   onRenew: (name: string) => void;
   onSetPrimary: (name: string) => void;
-  onUpdateMetadata: (name: string, metadata: string) => void;
   isRenewing?: boolean;
   isUpdatingMetadata?: boolean;
   isSettingPrimary?: boolean;
@@ -44,9 +43,6 @@ const isExpiringSoon = (expiresAt: number): boolean => {
 const Manage: React.FC = () => {
   const { publicKey } = useWallet();
   const { nameRecords, reverseRecords } = useSnsProgram();
-  const [activeNameForEdit, setActiveNameForEdit] = useState<string | null>(
-    null
-  );
   const [renewingNames, setRenewingNames] = useState<Set<string>>(new Set());
   const [updatingMetadata, setUpdatingMetadata] = useState<Set<string>>(new Set());
   const [settingPrimary, setSettingPrimary] = useState<Set<string>>(new Set());
@@ -90,15 +86,6 @@ const Manage: React.FC = () => {
     }));
   }, [userNames, primaryName]);
 
-  // Utility functions
-  const formatDate = (timestamp: number): string => {
-    return new Date(timestamp * 1000).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  };
-
   const renewName = async (name: string) => {
     setRenewingNames(prev => new Set(prev).add(name));
     // The actual renew logic will be handled in the NameCard component
@@ -108,13 +95,6 @@ const Manage: React.FC = () => {
   const setPrimary = async (name: string) => {
     setSettingPrimary(prev => new Set(prev).add(name));
     // The actual set primary logic will be handled in the NameCard component
-    // This is just for UI state management
-  };
-
-  const updateMetadata = async (name: string, metadata: string) => {
-    setUpdatingMetadata(prev => new Set(prev).add(name));
-    setActiveNameForEdit(null);
-    // The actual update metadata logic will be handled in the NameCard component
     // This is just for UI state management
   };
 
@@ -204,7 +184,6 @@ const Manage: React.FC = () => {
               {...nameData}
               onRenew={renewName}
               onSetPrimary={setPrimary}
-              onUpdateMetadata={updateMetadata}
               isRenewing={renewingNames.has(nameData.name)}
               isUpdatingMetadata={updatingMetadata.has(nameData.name)}
               isSettingPrimary={settingPrimary.has(nameData.name)}
@@ -233,7 +212,6 @@ const NameCard: React.FC<NameCardPropsExtended> = ({
   isPrimary,
   onRenew,
   onSetPrimary,
-  onUpdateMetadata,
   isRenewing = false,
   isUpdatingMetadata = false,
   isSettingPrimary = false,
@@ -296,7 +274,6 @@ const NameCard: React.FC<NameCardPropsExtended> = ({
     if (!publicKey) return;
     
     try {
-      onUpdateMetadata(name, newMetadata);
       await updateMetadata.mutateAsync({ newMetadata });
       setIsEditing(false);
       onUpdateMetadataComplete?.();

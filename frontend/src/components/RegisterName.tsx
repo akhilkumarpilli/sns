@@ -30,6 +30,7 @@ const RegisterName = () => {
       setNameAvailable(isAvailable);
     } catch (error) {
       // If fetch fails, name is likely available
+      console.log(error);
       setNameAvailable(true);
     } finally {
       setCheckingAvailability(false);

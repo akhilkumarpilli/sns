@@ -1,7 +1,7 @@
 "use client";
 
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { Cluster, Keypair, PublicKey } from "@solana/web3.js";
+import { PublicKey } from "@solana/web3.js";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { toast } from "sonner";
@@ -26,10 +26,6 @@ interface UpdateMetadataArgs {
 }
 
 interface SetReverseRecordArgs {
-  name: string;
-}
-
-interface RenewNameArgs {
   name: string;
 }
 
@@ -83,7 +79,7 @@ export function useSnsProgram() {
         .rpc();
     },
     onSuccess: (signature) => {
-      //   transactionToast(signature)
+      transactionToast(signature);
       config.refetch();
     },
     onError: (error) => {
@@ -137,7 +133,7 @@ export function useSnsProgram() {
 
 export function useSnsNameRecord({ name }: { name: string }) {
   const transactionToast = useTransactionToast();
-  const { program, nameRecords, reverseRecords } = useSnsProgram();
+  const { program, nameRecords } = useSnsProgram();
   const { publicKey } = useWallet();
 
   // Get specific name record
