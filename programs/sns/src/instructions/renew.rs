@@ -33,7 +33,7 @@ pub fn handler(ctx: Context<Renew>) -> Result<()> {
         ],
     )?;
 
-    ctx.accounts.name_record.expires_at += ONE_YEAR_IN_SECONDS;
+    ctx.accounts.name_record.expires_at = Clock::get()?.unix_timestamp + ONE_YEAR_IN_SECONDS;
 
     Ok(())
 }

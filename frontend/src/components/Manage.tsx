@@ -71,7 +71,7 @@ const Manage: React.FC = () => {
       // The reverse record PDA is derived from the user's public key
       const [reversePda] = PublicKey.findProgramAddressSync(
         [Buffer.from('reverse'), publicKey.toBuffer()],
-        new PublicKey('GMs44YSfLymVVmvoizi9HXUFrgsDbYNCHWkLW7mG6QJ9') // Your program ID
+        new PublicKey('6wfx3ZD75ePHe5ioWuwqJNbJmyAioYtT19QFHHGHbZxB') // Your program ID
       );
       return record.publicKey.equals(reversePda);
     });

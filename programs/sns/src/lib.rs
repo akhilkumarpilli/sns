@@ -8,7 +8,7 @@ use instructions::*;
 
 // This is your program's public key and it will update
 // automatically when you build the project.
-declare_id!("GMs44YSfLymVVmvoizi9HXUFrgsDbYNCHWkLW7mG6QJ9");
+declare_id!("6wfx3ZD75ePHe5ioWuwqJNbJmyAioYtT19QFHHGHbZxB");
 
 #[program]
 pub mod sns {

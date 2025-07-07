@@ -22,7 +22,7 @@ export function getSnsProgramId(cluster: Cluster) {
     case 'devnet':
     case 'testnet':
       // This is the program ID for the Counter program on devnet and testnet.
-      return new PublicKey('7ekPqPyUfxTMq5LpoWijLuFrbb7dGRwJDcTKdh4DEYZH')
+      return new PublicKey('6wfx3ZD75ePHe5ioWuwqJNbJmyAioYtT19QFHHGHbZxB')
     case 'mainnet-beta':
     default:
       return COUNTER_PROGRAM_ID
@@ -30,9 +30,9 @@ export function getSnsProgramId(cluster: Cluster) {
 }
 
 export function useAnchorProvider() {
-    const { connection } = useConnection()
-    const wallet = useWallet()
-  
-    return new AnchorProvider(connection, wallet as AnchorWallet, { commitment: 'confirmed' })
-  }
-  
+  const { connection } = useConnection()
+  const wallet = useWallet()
+
+  return new AnchorProvider(connection, wallet as AnchorWallet, { commitment: 'confirmed' })
+}
+

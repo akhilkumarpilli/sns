@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/sns.json`.
  */
 export type Sns = {
-  "address": "GMs44YSfLymVVmvoizi9HXUFrgsDbYNCHWkLW7mG6QJ9",
+  "address": "6wfx3ZD75ePHe5ioWuwqJNbJmyAioYtT19QFHHGHbZxB",
   "metadata": {
     "name": "sns",
     "version": "0.1.0",

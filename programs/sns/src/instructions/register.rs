@@ -12,7 +12,7 @@ pub struct Register<'info> {
     #[account(init, payer = user, seeds = [b"name", name.as_bytes()], bump, space = 8 + 32 + 4 + MAX_NAME_LEN + 4 + MAX_METADATA_LEN + 8 )]
     pub name_record: Account<'info, NameRecord>,
 
-    #[account(init, payer = user, seeds = [b"reverse", user.key().as_ref()], bump, space = 8 + 4 + MAX_NAME_LEN )]
+    #[account(init_if_needed, payer = user, seeds = [b"reverse", user.key().as_ref()], bump, space = 8 + 4 + MAX_NAME_LEN )]
     pub reverse_record: Account<'info, ReverseRecord>,
     pub system_program: Program<'info, System>,
 }

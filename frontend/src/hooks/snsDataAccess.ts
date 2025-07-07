@@ -34,7 +34,7 @@ export function useSnsProgram() {
   const transactionToast = useTransactionToast();
   const provider = useAnchorProvider();
   const programId = new PublicKey(
-    "GMs44YSfLymVVmvoizi9HXUFrgsDbYNCHWkLW7mG6QJ9"
+    "6wfx3ZD75ePHe5ioWuwqJNbJmyAioYtT19QFHHGHbZxB"
   );
   const program = useMemo(
     () => getSnsProgram(provider, programId),
@@ -251,7 +251,21 @@ export function useSnsReverseRecord({
   const setReverseRecord = useMutation<string, Error, SetReverseRecordArgs>({
     mutationKey: ["sns", "setReverseRecord", userAddress.toString()],
     mutationFn: async ({ name }) => {
-      return program.methods.setReverseRecord(name).rpc();
+      const [nameRecordPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("name"), Buffer.from(name)],
+        program.programId
+      );
+
+      const [reverseRecordPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("reverse"), userAddress.toBuffer()],
+        program.programId
+      );
+
+      return program.methods.setReverseRecord(name)
+        .accounts({
+          nameRecord: nameRecordPda,
+          reverse: reverseRecordPda,
+        }).rpc();
     },
     onSuccess: (signature) => {
       transactionToast(signature);
